@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "stable"
+before_script:
+  - npm install -g typescript
+script: 
+  - npm run build
+cache:
+  directories:
+    - "node_modules"
