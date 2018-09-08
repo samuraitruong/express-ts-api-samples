@@ -1,0 +1,16 @@
+{
+    "defaultSeverity": "warning",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "no-console": false,
+        "eofline": false
+    },
+    "rulesDirectory": [],
+    "linterOptions": [
+        "src/*.ts",
+        "src/**/*.ts"
+    ]
+}
