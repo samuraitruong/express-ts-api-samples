@@ -1,6 +1,7 @@
 "use strict";
 
 import * as bodyParser from "body-parser";
+import * as cors from "cors";
 import * as express from "express";
 import * as morgan from "morgan";
 import * as path from "path";
@@ -48,6 +49,9 @@ export class Server {
     }
     public config() {
         this.app.use(morgan("tiny"));
+        this.app.use(cors());
+        console.log(__dirname);
+        this.app.use("/", express.static(path.join(__dirname, "../public")));
     }
     public start(port: number) {
         this.app.listen(port, () => {
