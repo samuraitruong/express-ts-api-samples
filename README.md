@@ -33,5 +33,5 @@ or <br/>
 <br/><br/>
 ## get Product Quantity
 [http://localhost:5000/api/product/1e99cd65-f24f-455e-a12e-7d6fd22301aa/6f18dfb6-5874-4a09-b95e-77a2b6b338f3/quantity](http://localhost:5000/api/product/1e99cd65-f24f-455e-a12e-7d6fd22301aa/6f18dfb6-5874-4a09-b95e-77a2b6b338f3/quantity)
-[https://ozsale.herokuapp.com/api/product/1e99cd65-f24f-455e-a12e-7d6fd22301aa/6f18dfb6-5874-4a09-b95e-77a2b6b338f3/quantity]
-<br/>or<br/>(https://ozsale.herokuapp.com/api/product/1e99cd65-f24f-455e-a12e-7d6fd22301aa/6f18dfb6-5874-4a09-b95e-77a2b6b338f3/quantity)
+<br/>or<br/>
+[https://ozsale.herokuapp.com/api/product/1e99cd65-f24f-455e-a12e-7d6fd22301aa/6f18dfb6-5874-4a09-b95e-77a2b6b338f3/quantity](https://ozsale.herokuapp.com/api/product/1e99cd65-f24f-455e-a12e-7d6fd22301aa/6f18dfb6-5874-4a09-b95e-77a2b6b338f3/quantity)
