@@ -6,10 +6,15 @@ or<br/>
 [https://ozsale.herokuapp.com/api/menu](https://ozsale.herokuapp.com/api/menu)
 <br/><br/>
 
-## get category items
+## get sale  items
 [http://localhost:5000/api/category/0e6bbd1d-d65a-453e-bbcf-c7154839e29d](http://localhost:5000/api/category/0e6bbd1d-d65a-453e-bbcf-c7154839e29d)
 <br/>or<br/>
 [https://ozsale.herokuapp.com/api/category/0e6bbd1d-d65a-453e-bbcf-c7154839e29d](https://ozsale.herokuapp.com/api/category/0e6bbd1d-d65a-453e-bbcf-c7154839e29d)
+
+## get sale items sold out
+[http://localhost:5000/api/saleItem/da9b7801-8482-4b9f-b520-de0126325012/sold](http://localhost:5000/api/saleItem/da9b7801-8482-4b9f-b520-de0126325012/sold)
+<br/> or <br/>
+[https://ozsale.herokuapp.com/api/saleItem/da9b7801-8482-4b9f-b520-de0126325012/sold](https://ozsale.herokuapp.com/api/saleItem/da9b7801-8482-4b9f-b520-de0126325012/sold)
 
 <br/><br/>
 ## Get Sale Item categories

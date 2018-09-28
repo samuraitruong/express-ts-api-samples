@@ -1,0 +1,37 @@
+[{
+    "catId": "40f80218-a9e1-43c4-96ff-4c046d192a21",
+    "name": "Shop",
+    "order": 0
+}, {
+    "catId": "de9f863c-5372-4d9b-9370-5e2d50efbade",
+    "name": "Women",
+    "order": 1
+}, {
+    "catId": "5a2fe6ea-fd34-4278-9e21-3fb9a147d600",
+    "name": "Men",
+    "order": 2
+}, {
+    "catId": "2cf82a0b-81ab-41a4-9a45-d65f4e2c8eb4",
+    "name": "Kids",
+    "order": 3
+}, {
+    "catId": "ab3da212-b29d-4eb7-b0dd-85802c045d4d",
+    "name": "Footwear & Acc",
+    "order": 4
+}, {
+    "catId": "88d3d081-7657-4a7b-8553-d11574f39add",
+    "name": "Home & Living",
+    "order": 5
+}, {
+    "catId": "648b7070-c631-4244-afad-8a4ce60fe404",
+    "name": "Beauty",
+    "order": 6
+}, {
+    "catId": "3937bffe-3cd5-4935-a247-62f3acfc3088",
+    "name": "Personalise",
+    "order": 7
+}, {
+    "catId": "0e6bbd1d-d65a-453e-bbcf-c7154839e29d",
+    "name": "Clearance",
+    "order": 8
+}]

@@ -7,6 +7,8 @@ import * as morgan from "morgan";
 import * as path from "path";
 import * as routes from "./routes";
 import { Routes } from "./routes/index";
+import "./services/db";
+
 /**
  * The server.
  *

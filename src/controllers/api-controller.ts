@@ -24,10 +24,20 @@ export const getProductDetail = async (req: Request, res: Response, next: NextFu
     const data = await service.getSaleProductDetail(req.params.saleId, req.params.productId);
     res.json(data);
 };
+export const getSalePublicDetails = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    const service = new OZSaleService();
+    const data = await service.getSalePublicDetails(req.params.saleId);
+    res.json(data);
+};
 
 export const getProductQuantity = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const service = new OZSaleService();
     const data = await service.getSaleProductQuantity(req.params.saleId, req.params.productId);
+    res.json(data);
+};
+export const getSoldOutItem = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    const service = new OZSaleService();
+    const data = await service.getSoldoutItem(req.params.saleId);
     res.json(data);
 };
 
@@ -44,4 +54,6 @@ export const apiController = {
     getMenuList,
     getProductDetail,
     getProductQuantity,
+    getSalePublicDetails,
+    getSoldOutItem,
 };
