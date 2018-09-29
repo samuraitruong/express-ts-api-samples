@@ -5,9 +5,9 @@ import * as cors from "cors";
 import * as express from "express";
 import * as morgan from "morgan";
 import * as path from "path";
+import "./repositories/db";
 import * as routes from "./routes";
 import { Routes } from "./routes/index";
-import "./services/db";
 
 /**
  * The server.

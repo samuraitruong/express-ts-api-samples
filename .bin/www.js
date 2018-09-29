@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 
 "use strict";
-require('dotenv').config()
+require('dotenv').config();
 //module dependencies.
+//console.log("process", process.env)
+console.log("MONGO_DB_CONNECTION_STRING", process.env.MONGO_DB_CONNECTION_STRING)
+
 var app = require("../app/server").default;
 var debug = require("debug")("express:server");
 var http = require("http");
