@@ -25,7 +25,6 @@ export class Server {
      * @class Server
      * @method bootstrap
      * @static
-     * @return {ng.auto.IInjectorService} Returns the newly created injector for this app.
      */
     public static bootstrap(): Server {
         return new Server();
