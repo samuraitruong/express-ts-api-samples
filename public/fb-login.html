@@ -1,0 +1,75 @@
+<html>
+
+<head>
+    <script>
+        // https://developers.facebook.com/docs/facebook-login/web
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                console.log(response);
+                if (response.status == "connected") {
+                    document.getElementById("token").innerHTML = response.authResponse.accessToken;
+                    FB.api("/me", {
+                        fields: ["first_name", "last_name", "email"]
+                    }, function (x) {
+                        console.log(x)
+                    })
+                }
+
+            });
+        }
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '1920370448268315',
+                cookie: true,
+                xfbml: true,
+                version: 'v3.1'
+            });
+
+            FB.AppEvents.logPageView();
+            checkLoginState();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // document.addEventListener("DOMContentLoaded", function (event) {
+        //     //do work
+        //     FB.getLoginStatus(function (response) {
+        //         console.log("getLoginStatus", response);
+        //     })
+        // });
+    </script>
+</head>
+
+<body>
+
+
+    <div style="padding: 50px;">
+        loging using facebook <br />    
+        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+        </fb:login-button>
+
+        <div class="fb-login-button" data-width="100" data-max-rows="1" data-size="large" data-button-type="continue_with"
+            data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="false"></div>
+        <!-- 
+                    Verify token here    
+                graph.facebook.com/debug_token?
+                input_token={token-to-inspect}
+                &access_token={app_id}|{app_secret} -->
+
+        <div id="token" style="padding: 20px;border: dotted 1px #333; word-break: break-all; margin-top: 50px;"></div>
+    </div>
+
+
+</body>
+
+</html>
