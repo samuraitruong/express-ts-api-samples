@@ -1,10 +1,11 @@
 import * as crypto from "crypto";
 import * as moment from "moment";
 import { Document, Model, model, Schema } from "mongoose";
-import { isString } from "util";
 export type UserStatus = 0 | 1 | 2;
+// read more at - https://medium.com/@brianalois/build-node-mongo-rest-api-2018-jwt-eff0e4f41007
 export interface IUser {
-    fistName: string;
+    agreedTerm: boolean;
+    firstName: string;
     lastName: string;
     email: string;
     createdAt: number;
@@ -12,27 +13,41 @@ export interface IUser {
     updatedAt: number;
     status: UserStatus;
     salt: string;
+    subcribedEmail: boolean;
 }
 
 export interface IUserModel extends IUser, Document {
     fullName(): string;
+    verifyPassword(password: string): boolean;
+    getInfo(): Partial<IUser>;
 }
 
 export const UserSchema: Schema = new Schema({
+    agreedTerm: {
+        required: true,
+        type: Boolean,
+        validate: /true/,
+    },
     createdAt: Number,
-    email: String,
+    email: {
+        index: true,
+        required: true,
+        type: String,
+        unique: true,
+        validate: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    },
     firstName: String,
     lastName: String,
     password: String,
     salt: String,
     status: Number,
+    subcribedEmail: Boolean,
     updatedAt: Number,
 });
 // tslint:disable-next-line:only-arrow-functions
 UserSchema.pre<IUserModel>("save", function(next, documents) {
     this.createdAt = moment().utc().unix();
     this.updatedAt = moment().utc().unix();
-    console.log("on pre save call", this);
     if (this.password) {
         // generate salt
         this.salt = crypto.randomBytes(32).toString("base64");
@@ -43,6 +58,19 @@ UserSchema.pre<IUserModel>("save", function(next, documents) {
 });
 UserSchema.methods.fullName = (): string => {
     return (this.firstName.trim() + " " + this.lastName.trim());
+};
+// tslint:disable-next-line:only-arrow-functions
+UserSchema.methods.verifyPassword = function(password: string) {
+    console.log("verify function ", this);
+    password = crypto.pbkdf2Sync(password, this.salt, 10000, 64, "SHA512").toString("base64");
+    console.log("1", this.password);
+    console.log("2", password);
+    return this.password === password;
+
+};
+UserSchema.methods.getInfo = function(): Partial<IUser> {
+    const { subcribedEmail, email, firstName, lastName, createdAt, updatedAt, status } = this;
+    return { subcribedEmail, email, firstName, lastName, createdAt, updatedAt, status };
 };
 UserSchema.methods.hashPassword = (password: string) => {
     return crypto.pbkdf2Sync(password, this.salt, 10000, 64, "SHA512").toString("base64");

@@ -1,6 +1,7 @@
 import { MongoError } from "mongodb";
 import * as mongoose from "mongoose";
-mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, { useNewUrlParser: true },
+import { appConfigs } from "../config/index";
+mongoose.connect(appConfigs.MONGO_DB_CONNECTION_STRING, { useNewUrlParser: true },
     (err: MongoError) => {
         if (err) {
             console.error(err);
