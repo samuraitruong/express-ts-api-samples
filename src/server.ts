@@ -59,6 +59,14 @@ export class Server {
             extended: true,
         }));
         this.app.use(bodyParser.json());
+        this.app.use(passport.initialize());
+
+        passport.serializeUser((user, done) => {
+            done(null, user);
+          });
+        passport.deserializeUser((user, done) =>{
+            done(null, user);
+        });
 
         facebookMiddleware(passport);
         jwtMiddleware(passport);

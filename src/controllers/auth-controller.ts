@@ -17,7 +17,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
 };
 export const facebook = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        res.send("Hello facebook auth successful...... exchange token and use it in the app");
+        res.json(req.user);
         return;
     } catch (err) {
         response(res, err, null);

@@ -6,7 +6,7 @@ export class UserRepository {
     constructor() {
         // console.log("UserRepository");
     }
-    public async createUser(source: IUser): Promise<Partial<IUser>> {
+    public async createUser(source: Partial<IUser>): Promise<Partial<IUser>> {
         try {
             const user = await User.create(source);
             return user.getInfo();
@@ -17,7 +17,6 @@ export class UserRepository {
                 switch (mongoError.code) {
                     case 11000:
                         throw new EmailExistError();
-                        break;
                 }
             }
             if (error && error.name === "ValidationError") {

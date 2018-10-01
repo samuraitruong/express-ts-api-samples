@@ -3,8 +3,9 @@ import { LoginError } from "../common/errors";
 import { appConfigs } from "../config/index";
 import { IUser } from "../models";
 import { IAuthenticateResult } from "../models/authenticate";
-import { User } from "../models/user";
 import { IFacebookProfile } from "../models/facebook";
+import { User } from "../models/user";
+import { UserRepository } from "../repositories/user-repository";
 
 export async function authenticate(emailInput: string, password: string): Promise<IAuthenticateResult> {
     const user = await User.findOne({ email: emailInput });
@@ -25,21 +26,29 @@ export async function authenticate(emailInput: string, password: string): Promis
 }
 
 export async function facebookAuthenticate(facebookProfile: IFacebookProfile): Promise<IAuthenticateResult>  {
-    const user = await User.findOne({ facebookUserId: facebookProfile.id });
-    if (user) {
-        if (!user.verifyPassword(password)) {
-            throw new LoginError("Wrong email or password");
-        }
-        const { email, firstName, lastName } = user;
-        const key = Buffer.from(appConfigs.JWT_ENCRYPTION, "base64").toString();
-        const token = sign({
-            aud: appConfigs.JWT_AUDIENCE,
-            iss: appConfigs.JWT_ISSUER,
-            sub: user._id,
-        }, key, { expiresIn: appConfigs.JWT_EXPIRATION, algorithm: "RS256" });
-        return { user: { email, firstName, lastName }, token };
+    let user = await User.findOne({ socialId: facebookProfile.id });
+    if (!user) {
+        // create new user
+        const repository = new UserRepository();
+        const fbUser = await repository.createUser( {
+            agreedTerm: true,
+            email : facebookProfile.email,
+            firstName : facebookProfile.first_name,
+            lastName: facebookProfile.last_name,
+            socialId: facebookProfile.id,
+            socialType: "facebook",
+            subcribedEmail: true,
+        });
     }
-    return null;
+    user = await User.findOne({ socialId: facebookProfile.id });
+
+    const key = Buffer.from(appConfigs.JWT_ENCRYPTION, "base64").toString();
+    const token = sign({
+        aud: appConfigs.JWT_AUDIENCE,
+        iss: appConfigs.JWT_ISSUER,
+        sub: user._id,
+    }, key, { expiresIn: appConfigs.JWT_EXPIRATION, algorithm: "RS256" });
+    return { user: user.getInfo(), token };
 }
 export default {
     authenticate,

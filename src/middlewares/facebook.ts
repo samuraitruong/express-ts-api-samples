@@ -3,8 +3,8 @@ import { PassportStatic } from "passport";
 import * as FacebookTokenStrategy from "passport-facebook-token";
 import { appConfigs } from "../config";
 import { User } from "../models";
-import { authenticate, facebookAuthenticate } from "../services/authenticate-service";
 import { IFacebookResult } from "../models/facebook";
+import { authenticate, facebookAuthenticate } from "../services/authenticate-service";
 
 export const facebookMiddleware = (passport: PassportStatic) => {
     const opts: FacebookTokenStrategy.StrategyOptionsWithRequest = {
@@ -16,14 +16,10 @@ export const facebookMiddleware = (passport: PassportStatic) => {
     };
 
     passport.use(new FacebookTokenStrategy(opts, async (req: Request, accessToken: any, refreshToken: any,
-        profile: IFacebookResult, done: (err: any, data: any) => void) => {
-        let user;
-        
-        console.log("facebook", profile._json);
-
-        user = await facebookAuthenticate(profile._json);
-        if (user) {
-            return done(null, user);
+                                                        profile: FacebookTokenStrategy.Profile, done: (err: any, data: any) => void) => {
+        let authResult = await facebookAuthenticate(profile._json);
+        if (authResult) {
+            return done(null, authResult);
         } else {
             return done(null, false);
         }

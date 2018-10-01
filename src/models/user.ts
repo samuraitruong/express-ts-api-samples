@@ -14,6 +14,8 @@ export interface IUser {
     status: UserStatus;
     salt: string;
     subcribedEmail: boolean;
+    socialId?: string;
+    socialType?: "facebook"|"google"|"instragram";
 }
 
 export interface IUserModel extends IUser, Document {
@@ -43,6 +45,8 @@ export const UserSchema: Schema = new Schema({
     status: Number,
     subcribedEmail: Boolean,
     updatedAt: Number,
+    socialId: String,
+    socialType: String,
 });
 // tslint:disable-next-line:only-arrow-functions
 UserSchema.pre<IUserModel>("save", function(next, documents) {
@@ -61,16 +65,13 @@ UserSchema.methods.fullName = (): string => {
 };
 // tslint:disable-next-line:only-arrow-functions
 UserSchema.methods.verifyPassword = function(password: string) {
-    console.log("verify function ", this);
     password = crypto.pbkdf2Sync(password, this.salt, 10000, 64, "SHA512").toString("base64");
-    console.log("1", this.password);
-    console.log("2", password);
     return this.password === password;
 
 };
 UserSchema.methods.getInfo = function(): Partial<IUser> {
-    const { subcribedEmail, email, firstName, lastName, createdAt, updatedAt, status } = this;
-    return { subcribedEmail, email, firstName, lastName, createdAt, updatedAt, status };
+    const { subcribedEmail, email, firstName, lastName, createdAt, updatedAt, status , socialId} = this;
+    return { subcribedEmail, email, firstName, lastName, createdAt, updatedAt, status, socialId};
 };
 UserSchema.methods.hashPassword = (password: string) => {
     return crypto.pbkdf2Sync(password, this.salt, 10000, 64, "SHA512").toString("base64");
