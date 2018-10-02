@@ -17,7 +17,7 @@ export const facebookMiddleware = (passport: PassportStatic) => {
 
     passport.use(new FacebookTokenStrategy(opts, async (req: Request, accessToken: any, refreshToken: any,
                                                         profile: FacebookTokenStrategy.Profile, done: (err: any, data: any) => void) => {
-        let authResult = await facebookAuthenticate(profile._json);
+        const authResult = await facebookAuthenticate(profile._json);
         if (authResult) {
             return done(null, authResult);
         } else {
