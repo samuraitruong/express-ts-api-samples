@@ -4,6 +4,7 @@ import { Document, Model, model, Schema } from "mongoose";
 export type UserStatus = 0 | 1 | 2;
 // read more at - https://medium.com/@brianalois/build-node-mongo-rest-api-2018-jwt-eff0e4f41007
 export interface IUser {
+    userId: string;
     agreedTerm: boolean;
     firstName: string;
     lastName: string;
@@ -71,7 +72,9 @@ UserSchema.methods.verifyPassword = function(password: string) {
 };
 UserSchema.methods.getInfo = function(): Partial<IUser> {
     const { subcribedEmail, email, firstName, lastName, createdAt, updatedAt, status , socialId} = this;
-    return { subcribedEmail, email, firstName, lastName, createdAt, updatedAt, status, socialId};
+    const user = { subcribedEmail, email, firstName,
+        lastName, createdAt, updatedAt, status, socialId, userId: this._id};
+    return user;
 };
 UserSchema.methods.hashPassword = (password: string) => {
     return crypto.pbkdf2Sync(password, this.salt, 10000, 64, "SHA512").toString("base64");
