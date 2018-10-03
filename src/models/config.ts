@@ -7,4 +7,5 @@ export interface IConfig {
     JWT_EXPIRATION: number;
     JWT_AUDIENCE: string;
     JWT_ISSUER: string;
+    OZSALE_ACCOUNT_ID: string;
 }

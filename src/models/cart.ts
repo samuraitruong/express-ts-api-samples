@@ -4,49 +4,49 @@ export type UserStatus = 0 | 1 | 2;
 // read more at -
 // https://medium.com/@brianalois/build-node-mongo-rest-api-2018-jwt-eff0e4f41007
 export interface ICartItem {
-    productId : string;
-    saleId : string;
-    quantity : number;
-    price : number;
-    size : string;
-    productDetail : any;
+    productId: string;
+    saleId: string;
+    quantity: number;
+    price: number;
+    size: string;
+    productDetail: any;
 
 }
 export interface ICart {
-    userId : string;
+    userId: string;
     updatedOn?: number;
-    items : ICartItem[];
+    items: ICartItem[];
 
 }
 
 export interface ICartModel extends ICart,
-Document {simplify(): ICart;}
-export const CartItemSchema : Schema = new Schema({
+Document {simplify(): ICart; }
+export const CartItemSchema: Schema = new Schema({
     size: String,
     price: Number,
     productId: String,
     quantity: Number,
     saleId: String,
-    productDetail: Schema.Types.Mixed
+    productDetail: Schema.Types.Mixed,
 });
-export const CartSchema : Schema = new Schema({
+export const CartSchema: Schema = new Schema({
     items: [CartItemSchema],
     updateOn: Number,
     userId: {
         type: Schema.Types.ObjectId,
-        ref: "user"
-    }
+        ref: "user",
+    },
 });
 // tslint:disable-next-line:only-arrow-functions
-CartSchema.pre < ICartModel > ("save", function (next, documents) {
+CartSchema.pre < ICartModel > ("save", function(next, documents) {
     this.updatedOn = moment()
         .utc()
         .unix();
     next();
 });
 // tslint:disable-next-line:only-arrow-functions
-CartSchema.methods.simplify = function () {
+CartSchema.methods.simplify = function() {
     const {userId, updatedOn, items} = this;
     return {userId, updatedOn, items};
-}
-export const ShoppingCart : Model < ICartModel > = model < ICartModel > ("cart", CartSchema);
+};
+export const ShoppingCart: Model < ICartModel > = model < ICartModel > ("cart", CartSchema);

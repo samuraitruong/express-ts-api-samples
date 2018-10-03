@@ -4,7 +4,7 @@ import { apiController } from "../controllers/api-controller";
 const router: Router = Router();
 
 router.get("/api/menu", apiController.getMenuList);
-router.get("/api/category/:id", apiController.getCategoryData);
+router.get("/api/category/", apiController.getCategoryData);
 router.get("/api/saleItem/:id", apiController.getItemData);
 router.get("/api/saleItem/:saleId/categories", apiController.getItemDataCategories);
 router.get("/api/saleItem/:saleId/sold", apiController.getSoldOutItem);
