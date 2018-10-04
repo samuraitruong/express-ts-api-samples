@@ -2,5 +2,4 @@
 
 ## get list menu
 
-Please refer to document at :
-https://documenter.getpostman.com/view/3159079/RWgnWKy8
+[https://documenter.getpostman.com/view/3159079/RWgnWKy8](https://documenter.getpostman.com/view/3159079/RWgnWKy8)
