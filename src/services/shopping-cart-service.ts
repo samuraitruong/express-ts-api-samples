@@ -20,6 +20,14 @@ export class ShoppingCartService {
         return item || {
             items: [],
             userId: ""
-        }
+        };
     }
+
+    public async removeItem(itemId : string) : Promise < ICart > {
+        const item = await this
+            .repository
+            .getCardByUserId();
+        return item;
+    }
+
 }

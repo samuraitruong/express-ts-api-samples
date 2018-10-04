@@ -1,11 +1,11 @@
-import {Request} from "express";
-import {NextFunction, Response} from "express-serve-static-core";
-import {response} from "../common/response";
-import {ShoppingCartRepository} from "../repositories/shopping-cart-repository";
-import {OZSaleService} from "../services/ozsale-service";
-import {ShoppingCartService} from "../services/shopping-cart-service";
+import { NextFunction, Response } from 'express-serve-static-core';
+import { OZSaleService } from '../services/ozsale-service';
+import { Request } from 'express';
+import { response } from '../common/response';
+import { ShoppingCartRepository } from '../repositories/shopping-cart-repository';
+import { ShoppingCartService } from '../services/shopping-cart-service';
 
-export const get = async (req: Request, res: Response, next: NextFunction): Promise < void > => {
+export const get = async(req : Request, res : Response, next : NextFunction) : Promise < void > => {
     try {
         const repo = new ShoppingCartRepository(req.user);
         const service = new ShoppingCartService(repo, new OZSaleService());
@@ -16,7 +16,7 @@ export const get = async (req: Request, res: Response, next: NextFunction): Prom
         response(res, err, null);
     }
 };
-export const post = async (req: Request, res: Response, next: NextFunction): Promise < void > => {
+export const post = async(req : Request, res : Response, next : NextFunction) : Promise < void > => {
     try {
         const repo = new ShoppingCartRepository(req.user);
         const service = new ShoppingCartService(repo, new OZSaleService());
@@ -26,7 +26,21 @@ export const post = async (req: Request, res: Response, next: NextFunction): Pro
         response(res, err, null);
     }
 };
+
+export const deleteFunc = async(req : Request, res : Response, next : NextFunction) : Promise < void > => {
+    try {
+        const repo = new ShoppingCartRepository(req.user);
+        const service = new ShoppingCartService(repo, new OZSaleService());
+        const result = await service.removeItem(req.params.itemId);
+
+        response(res, null, result);
+    } catch (err) {
+        response(res, err, null);
+    }
+};
+
 export const cartController = {
+    deleteFunc,
     get,
-    post,
+    post
 };

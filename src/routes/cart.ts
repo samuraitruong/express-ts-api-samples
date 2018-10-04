@@ -1,6 +1,6 @@
-import {Router} from "express";
+import { Router } from "express";
 import * as passport from "passport";
-import {cartController} from "../controllers/cart-controller";
+import { cartController } from "../controllers/cart-controller";
 
 const router: Router = Router();
 
@@ -9,4 +9,7 @@ router
     .get(passport.authenticate("jwt", {session: false}), cartController.get)
     .post(passport.authenticate("jwt", {session: false}), cartController.post);
 
+router
+    .route("/api/cart/:itemId")
+    .delete(passport.authenticate("jwt", {session: false}), cartController.deleteFunc);
 export const cartRoute: Router = router;
