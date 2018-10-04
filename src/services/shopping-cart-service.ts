@@ -18,7 +18,8 @@ export class ShoppingCartService {
             .repository
             .getCardByUserId();
         return item || {
-            items: []
+            items: [],
+            userId: ""
         }
     }
 }
