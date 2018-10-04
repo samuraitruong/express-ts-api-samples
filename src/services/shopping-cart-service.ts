@@ -1,12 +1,11 @@
-import { ICart, ICartItem } from "../models/cart";
-import { ShoppingCartRepository } from "../repositories/shopping-cart-repository";
-import { OZSaleService } from "./ozsale-service";
+import { ICart, ICartItem } from '../models/cart';
+import { OZSaleService } from './ozsale-service';
+import { ShoppingCartRepository } from '../repositories/shopping-cart-repository';
 
 export class ShoppingCartService {
-    constructor(private repository: ShoppingCartRepository, private ozSaleService: OZSaleService) {}
-    public async addItem(item: ICartItem) {
+    constructor(private repository : ShoppingCartRepository, private ozSaleService : OZSaleService) {}
+    public async addItem(item : ICartItem) {
         // fetching cart detail
-        console.log("card item", item);
         item.productDetail = await this
             .ozSaleService
             .getSaleProductDetail(item.productId);
@@ -14,9 +13,12 @@ export class ShoppingCartService {
             .repository
             .addCartItem(item);
     }
-    public async GetMyCart(): Promise < ICart > {
-        return await this
+    public async GetMyCart() : Promise < ICart > {
+        const item = await this
             .repository
             .getCardByUserId();
+        return item || {
+            items: []
+        }
     }
 }

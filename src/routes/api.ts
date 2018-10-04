@@ -3,7 +3,7 @@ import { apiController } from "../controllers/api-controller";
 
 const router: Router = Router();
 
-router.get("/api/menu", apiController.getMenuList);
+router.get("/api/shop/menu", apiController.getMenuList);
 router.get("/api/category/", apiController.getCategoryData);
 router.get("/api/saleItems", apiController.getSaleItems);
 router.get("/api/saleItem/:saleId/categories", apiController.getItemDataCategories);
