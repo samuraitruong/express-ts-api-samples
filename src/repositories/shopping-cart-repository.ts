@@ -1,5 +1,10 @@
-import {IUser} from "../models";
-import {ICart, ICartItem, ICartModel, ShoppingCart} from "../models/cart";
+import { IUser } from "../models";
+import {
+    ICart,
+    ICartItem,
+    ICartModel,
+    ShoppingCart,
+    } from "../models/cart";
 export class ShoppingCartRepository {
     constructor(private user: IUser) {}
     public async addCartItem(item: ICartItem): Promise < ICart > {
@@ -33,6 +38,16 @@ export class ShoppingCartRepository {
                 return null;
             }
             return cart.simplify();
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    public async update(item: ICart): Promise < ICart > {
+        try {
+            const cart: ICartModel = await ShoppingCart.findOneAndUpdate({
+                userId: this.user.userId,
+            }, item);
+            return cart;
         } catch (err) {
             console.log(err);
         }

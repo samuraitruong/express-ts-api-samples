@@ -1,11 +1,11 @@
-import { NextFunction, Response } from 'express-serve-static-core';
-import { OZSaleService } from '../services/ozsale-service';
-import { Request } from 'express';
-import { response } from '../common/response';
-import { ShoppingCartRepository } from '../repositories/shopping-cart-repository';
-import { ShoppingCartService } from '../services/shopping-cart-service';
+import { Request } from "express";
+import { NextFunction, Response } from "express-serve-static-core";
+import { response } from "../common/response";
+import { ShoppingCartRepository } from "../repositories/shopping-cart-repository";
+import { OZSaleService } from "../services/ozsale-service";
+import { ShoppingCartService } from "../services/shopping-cart-service";
 
-export const get = async(req : Request, res : Response, next : NextFunction) : Promise < void > => {
+export const get = async (req: Request, res: Response, next: NextFunction): Promise < void > => {
     try {
         const repo = new ShoppingCartRepository(req.user);
         const service = new ShoppingCartService(repo, new OZSaleService());
@@ -16,7 +16,20 @@ export const get = async(req : Request, res : Response, next : NextFunction) : P
         response(res, err, null);
     }
 };
-export const post = async(req : Request, res : Response, next : NextFunction) : Promise < void > => {
+
+export const put = async (req: Request, res: Response, next: NextFunction): Promise < void > => {
+    try {
+        const repo = new ShoppingCartRepository(req.user);
+        const service = new ShoppingCartService(repo, new OZSaleService());
+        const result = await service.updateItem(req.body);
+        response(res, null, result);
+        return;
+    } catch (err) {
+        response(res, err, null);
+    }
+};
+
+export const post = async (req: Request, res: Response, next: NextFunction): Promise < void > => {
     try {
         const repo = new ShoppingCartRepository(req.user);
         const service = new ShoppingCartService(repo, new OZSaleService());
@@ -27,7 +40,7 @@ export const post = async(req : Request, res : Response, next : NextFunction) : 
     }
 };
 
-export const deleteFunc = async(req : Request, res : Response, next : NextFunction) : Promise < void > => {
+export const deleteFunc = async (req: Request, res: Response, next: NextFunction): Promise < void > => {
     try {
         const repo = new ShoppingCartRepository(req.user);
         const service = new ShoppingCartService(repo, new OZSaleService());
@@ -42,5 +55,6 @@ export const deleteFunc = async(req : Request, res : Response, next : NextFuncti
 export const cartController = {
     deleteFunc,
     get,
-    post
+    post,
+    put,
 };

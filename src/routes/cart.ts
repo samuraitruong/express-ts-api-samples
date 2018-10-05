@@ -7,7 +7,8 @@ const router: Router = Router();
 router
     .route("/api/cart")
     .get(passport.authenticate("jwt", {session: false}), cartController.get)
-    .post(passport.authenticate("jwt", {session: false}), cartController.post);
+    .post(passport.authenticate("jwt", {session: false}), cartController.post)
+    .put(passport.authenticate("jwt", {session: false}), cartController.put);
 
 router
     .route("/api/cart/:itemId")

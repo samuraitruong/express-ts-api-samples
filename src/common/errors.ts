@@ -18,7 +18,12 @@ export class InternalError extends BaseError {
         super(500, "Internal Error - Please contact administrator");
     }
 }
-
+// tslint:disable-next-line:max-classes-per-file
+export class NotFoundError extends BaseError {
+    constructor(public message: string) {
+        super(404, message || "Not found - The requested item not found");
+    }
+}
 // tslint:disable-next-line:max-classes-per-file
 export class EmailExistError extends BaseError {
     constructor() {
