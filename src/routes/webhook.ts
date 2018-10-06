@@ -8,4 +8,4 @@ router
     .route("/_webhooks/paypal")
     .post(paypalController.process)
     .get(paypalController.process);
-export const webhookRoute : Router = router;
+export const webhookRoute: Router = router;
