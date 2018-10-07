@@ -1,10 +1,11 @@
 import * as Cheerio from "cheerio";
 import { appConfigs } from "../config";
+import { default as Cache } from "./cache-service";
 import { default as Axios } from "axios";
 import { getFacets, getProductDetail } from "../controllers/api-controller";
 import { IMenu } from "../models/menu";
 import { ISoldoutItem } from "../models/ozsale";
-export class OZSaleService {
+; export class OZSaleService {
     private URL = "https://ozsale.com.au";
     public async getMenuList(): Promise<IMenu[]> {
         const url = `https://www.ozsale.com.au/api/shop/shop/v2/accounts/${appConfigs.OZSALE_ACCOUNT_ID}/categorytree`;
@@ -14,7 +15,7 @@ export class OZSaleService {
     }
 
     public async getCategoryData(category: string, limit: number, lastGroupType?: string, lastGroupOffset?: number): Promise<any> {
-        let url = `https://www.ozsale.com.au/api/sale/sale/v3/accounts/${appConfigs.OZSALE_ACCOUNT_ID}/banners/grouped/?limit=${limit}`
+        let url = `https://www.ozsale.com.au/api/sale/sale/v3/accounts/${appConfigs.OZSALE_ACCOUNT_ID}/banners/grouped/?limit=${limit}`;
         if (category) {
             url += `&category=${category}`;
         }
@@ -26,9 +27,7 @@ export class OZSaleService {
             url += "&lastGroupOffset=" + lastGroupOffset;
         }
         console.log("request url", url);
-        const resposne = await Axios.get(url);
-        // const list = resposne.data.d.List;
-        return resposne.data;
+        return await this.get(url);
     }
     public async getFacets(): Promise<any> {
         const url = `https://www.ozsale.com.au/api/shop/shop/v2/accounts/${appConfigs.OZSALE_ACCOUNT_ID}/facets`;
@@ -73,7 +72,8 @@ export class OZSaleService {
         return {};
     }
     public async getSaleItemCategories(itemId: string): Promise<any> {
-        const url = "https://www.ozsale.com.au/ApacHandlers.ashx/GetPublicSaleCategories?saleID=" + itemId + "&getSizes=true&getSaleInfo=true&languageID=en&countryID=AS&userGroup=";
+        const url = "https://www.ozsale.com.au/ApacHandlers.ashx/GetPublicSaleCategories?saleID="
+            + itemId + "&getSizes=true&getSaleInfo=true&languageID=en&countryID=AS&userGroup=";
         const resposne = await Axios.get(url);
         return resposne.data.d.Value;
     }
@@ -98,5 +98,13 @@ export class OZSaleService {
             "erGroup=";
         const resposne = await Axios.get(url);
         return resposne.data.d.Value;
+    }
+    public async get(url: string): Promise<any> {
+        const value = Cache.get(url);
+        if (value !== null) return value;
+
+        const resposne = await Axios.get(url);
+        Cache.set(url, resposne.data);
+        return resposne.data;
     }
 }

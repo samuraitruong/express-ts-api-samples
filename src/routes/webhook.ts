@@ -1,6 +1,6 @@
+import { Request, Response, Router } from "express";
 import { apiController } from "../controllers/api-controller";
 import { paypalController } from "../controllers/paypal-controller";
-import { Request, Response, Router } from "express";
 
 const router: Router = Router();
 
