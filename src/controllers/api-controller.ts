@@ -54,6 +54,11 @@ export const getSorting = async (req: Request, res: Response, next: NextFunction
     const data = await service.getSorting();
     res.json(data);
 };
+export const getSaleName = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    const service = new OZSaleService();
+    const data = await service.getSaleName(req.params.saleId);
+    res.json(data);
+};
 
 export const apiController = {
     getCategoryData,
@@ -63,6 +68,7 @@ export const apiController = {
     getProductDetail,
     getProductQuantity,
     getSalePublicDetails,
+    getSaleName,
     getFacets,
     getSorting,
 };

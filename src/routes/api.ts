@@ -1,5 +1,5 @@
-import { Request, Response, Router } from "express";
 import { apiController } from "../controllers/api-controller";
+import { Request, Response, Router } from "express";
 
 const router: Router = Router();
 
@@ -7,6 +7,7 @@ router.get("/api/shop/menu", apiController.getMenuList);
 router.get("/api/category/", apiController.getCategoryData);
 router.get("/api/saleItems", apiController.getSaleItems);
 router.get("/api/saleItem/:saleId/categories", apiController.getItemDataCategories);
+router.get("/api/saleItem/:saleId/name", apiController.getSaleName);
 router.get("/api/saleItem/:saleId/publicInfo", apiController.getSalePublicDetails);
 router.get("/api/product/:productId", apiController.getProductDetail);
 router.get("/api/product/:saleId/:productId/quantity", apiController.getProductQuantity);

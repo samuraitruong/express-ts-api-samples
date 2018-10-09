@@ -5,7 +5,7 @@ import { default as Axios } from "axios";
 import { getFacets, getProductDetail } from "../controllers/api-controller";
 import { IMenu } from "../models/menu";
 import { ISoldoutItem } from "../models/ozsale";
-; export class OZSaleService {
+export class OZSaleService {
     private URL = "https://ozsale.com.au";
     public async getMenuList(): Promise<IMenu[]> {
         const url = `https://www.ozsale.com.au/api/shop/shop/v2/accounts/${appConfigs.OZSALE_ACCOUNT_ID}/categorytree`;
@@ -43,6 +43,16 @@ import { ISoldoutItem } from "../models/ozsale";
         // const list = resposne.data.d.List;
         return resposne.data;
     }
+
+    public async getSaleName(saleId: string): Promise<any> {
+        const url = `https://www.ozsale.com.au/api/shop/shop/v2/accounts/${appConfigs.OZSALE_ACCOUNT_ID}/sales/` + saleId;
+
+
+        const resposne = await Axios.get(url);
+        // const list = resposne.data.d.List;
+        return resposne.data;
+    }
+
     public async getOurPay(amount: number): Promise<any> {
         const url = `https://www.ozsale.com.au/api/shop/product/v1/accounts/${appConfigs.OZSALE_ACCOUNT_ID}/ourpaydata?currencyId=AUD&amount=${amount}`;
 
@@ -101,7 +111,7 @@ import { ISoldoutItem } from "../models/ozsale";
     }
     public async get(url: string): Promise<any> {
         const value = Cache.get(url);
-        if (value !== null) return value;
+        if (value !== null) { return value; }
 
         const resposne = await Axios.get(url);
         Cache.set(url, resposne.data);
