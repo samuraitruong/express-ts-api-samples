@@ -4,12 +4,12 @@ import {
     ICartItem,
     ICartModel,
     ShoppingCart,
-    } from "../models/cart";
+} from "../models/cart";
 export class ShoppingCartRepository {
-    constructor(private user: IUser) {}
-    public async addCartItem(item: ICartItem): Promise < ICart > {
+    constructor(private user: IUser) { }
+    public async addCartItem(item: ICartItem): Promise<ICart> {
         try {
-            let cart: ICartModel = await ShoppingCart.findOne({userId: this.user.userId});
+            let cart: ICartModel = await ShoppingCart.findOne({ userId: this.user.userId });
             if (cart == null) {
                 const newCart: ICart = {
                     items: [item],
@@ -25,24 +25,24 @@ export class ShoppingCartRepository {
                 }, cart);
             }
 
-            cart = await ShoppingCart.findOne({userId: this.user.userId});
+            cart = await ShoppingCart.findOne({ userId: this.user.userId });
             return cart.simplify();
         } catch (err) {
             console.log(err);
         }
     }
-    public async getCardByUserId(userId?: string): Promise < ICart > {
+    public async getCardByUserId(userId?: string): Promise<ICartModel> {
         try {
-            const cart: ICartModel = await ShoppingCart.findOne({userId: this.user.userId});
+            const cart: ICartModel = await ShoppingCart.findOne({ userId: this.user.userId });
             if (cart === null) {
                 return null;
             }
-            return cart.simplify();
+            return cart; // .simplify();
         } catch (err) {
             console.log(err);
         }
     }
-    public async update(item: ICart): Promise < ICart > {
+    public async update(item: ICart): Promise<ICart> {
         try {
             const cart: ICartModel = await ShoppingCart.findOneAndUpdate({
                 userId: this.user.userId,

@@ -47,7 +47,6 @@ export class OZSaleService {
     public async getSaleName(saleId: string): Promise<any> {
         const url = `https://www.ozsale.com.au/api/shop/shop/v2/accounts/${appConfigs.OZSALE_ACCOUNT_ID}/sales/` + saleId;
 
-
         const resposne = await Axios.get(url);
         // const list = resposne.data.d.List;
         return resposne.data;
@@ -66,7 +65,7 @@ export class OZSaleService {
             url += "&c=" + encodeURIComponent(category);
         }
         if (filters) {
-            url += "&ff" + encodeURIComponent(filters);
+            url += "&ff=" + encodeURIComponent(filters);
         } else {
             url += "&ff=%7B%7D";
         }
