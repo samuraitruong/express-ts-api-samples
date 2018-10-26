@@ -1,10 +1,10 @@
+import { default as Axios } from "axios";
 import * as Cheerio from "cheerio";
 import { appConfigs } from "../config";
-import { default as Cache } from "./cache-service";
-import { default as Axios } from "axios";
 import { getFacets, getProductDetail } from "../controllers/api-controller";
 import { IMenu } from "../models/menu";
 import { ISoldoutItem } from "../models/ozsale";
+import { default as Cache } from "./cache-service";
 export class OZSaleService {
     private URL = "https://ozsale.com.au";
     public async getMenuList(): Promise<IMenu[]> {
