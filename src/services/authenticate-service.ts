@@ -1,11 +1,11 @@
-import {decode, sign, verify} from "jsonwebtoken";
-import {LoginError} from "../common/errors";
-import {appConfigs} from "../config/index";
-import {IUser} from "../models";
-import {IAuthenticateResult} from "../models/authenticate";
-import {IFacebookProfile} from "../models/facebook";
-import {User} from "../models/user";
-import {UserRepository} from "../repositories/user-repository";
+import { appConfigs } from "../config/index";
+import { decode, sign, verify } from "jsonwebtoken";
+import { IAuthenticateResult } from "../models/authenticate";
+import { IFacebookProfile } from "../models/facebook";
+import { IUser } from "../models";
+import { LoginError } from "../common/errors";
+import { User } from "../models/user";
+import { UserRepository } from "../repositories/user-repository";
 
 export async function authenticate(emailInput: string, password: string): Promise < IAuthenticateResult > {
     const user = await User.findOne({email: emailInput});
@@ -34,7 +34,7 @@ export async function authenticate(emailInput: string, password: string): Promis
             token,
         };
     }
-    return null;
+    throw new LoginError("Wrong email or password");
 }
 
 export async function facebookAuthenticate(facebookProfile: IFacebookProfile): Promise < IAuthenticateResult > {
