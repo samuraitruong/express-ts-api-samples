@@ -40,15 +40,15 @@ export const CartSchema: Schema = new Schema({
     },
 });
 // tslint:disable-next-line:only-arrow-functions
-CartSchema.pre<ICartModel>("save", function (next, documents) {
+CartSchema.pre<ICartModel>("save", function(next, documents) {
     this.updatedOn = moment()
         .utc()
         .unix();
     next();
 });
-CartSchema.index({ productId: 1 })
+CartSchema.index({ productId: 1 });
 // tslint:disable-next-line:only-arrow-functions
-CartSchema.methods.simplify = function () {
+CartSchema.methods.simplify = function() {
     const { userId, updatedOn, items } = this;
     return { userId, updatedOn, items };
 };

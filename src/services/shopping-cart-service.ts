@@ -1,15 +1,16 @@
 import * as moment from "moment";
-import { NotFoundError } from "../common/errors";
 import { ICart, ICartItem } from "../models/cart";
-import { ShoppingCartRepository } from "../repositories/shopping-cart-repository";
+import { NotFoundError } from "../common/errors";
 import { OZSaleService } from "./ozsale-service";
+import { ShoppingCartRepository } from "../repositories/shopping-cart-repository";
 
 export class ShoppingCartService {
-    constructor(private repository: ShoppingCartRepository, private ozSaleService: OZSaleService) {}
-    public async addItem(item: ICartItem): Promise < ICart > {
+    constructor(private repository: ShoppingCartRepository, private ozSaleService: OZSaleService) { }
+    public async addItem(item: ICartItem): Promise<ICart> {
         // fetching cart detail
         const cart = await this.GetMyCart();
-        if (cart && cart.items && cart.items.find((x) => x.productId === item.productId)) {
+        console.log("item.size", item.size)
+        if (cart && cart.items && cart.items.find((x) => x.productId === item.productId && x.size === item.size)) {
             // update quatity only
             const filter = cart
                 .items
@@ -28,7 +29,7 @@ export class ShoppingCartService {
             .addCartItem(item);
     }
 
-    public async updateItem(item: ICartItem): Promise < ICart > {
+    public async updateItem(item: ICartItem): Promise<ICart> {
         // fetching cart detail
         const cart = await this.GetMyCart();
         if (cart && cart.items && cart.items.find((x) => x.productId === item.productId)) {
@@ -42,10 +43,10 @@ export class ShoppingCartService {
                 .update(cart);
         }
 
-        throw new NotFoundError​​("Not Found - Could not found requested cart item");
+        throw new NotFoundError("Not Found - Could not found requested cart item");
     }
 
-    public async GetMyCart(): Promise < ICart > {
+    public async GetMyCart(): Promise<ICart> {
         const item = await this
             .repository
             .getCardByUserId();
@@ -55,7 +56,7 @@ export class ShoppingCartService {
         };
     }
 
-    public async removeItem(itemId: string): Promise < ICart > {
+    public async removeItem(itemId: string): Promise<ICart> {
         const item = await this
             .repository
             .getCardByUserId();
